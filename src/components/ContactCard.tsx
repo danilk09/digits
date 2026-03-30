@@ -2,9 +2,10 @@
 
 import { Contact } from '@/lib/validationSchemas';
 import { Card, Image } from "react-bootstrap";
+import Link from 'next/link';
 
 /* Renders a single row in the List Stuff table. See list/page.tsx. */
-const ContactCard = ({ firstName, lastName, address, image, description }: Contact) => (
+const ContactCard = ({ id, firstName, lastName, address, image, description }: Contact) => (
     <Card className="h-100">
         <Card.Header>
             <Image src={image} width={75} alt="Contact Image" />
@@ -14,6 +15,9 @@ const ContactCard = ({ firstName, lastName, address, image, description }: Conta
         <Card.Body>
             <Card.Text>{description}</Card.Text>
         </Card.Body>
+        <Card.Footer as="div">
+            <Link href={`edit/${id}`}>Edit</Link>
+        </Card.Footer>
     </Card>  
 );
 
