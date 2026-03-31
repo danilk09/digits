@@ -2,6 +2,7 @@
 
 import { Condition } from '@prisma/client';
 import { Stuff } from '@prisma/client';
+import { Contact } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
@@ -92,4 +93,35 @@ export async function changePassword(credentials: { email: string; password: str
       password,
     },
   });
+}
+
+export async function addContact(contact: { firstName: string; lastName: string; address: string; image: string; description: string; owner: string }) {
+  await prisma.contact.create({
+    data: {
+      firstName: contact.firstName,
+      lastName: contact.lastName,
+      address: contact.address,
+      image: contact.image,
+      description: contact.description,
+      owner: contact.owner,
+    },
+  });
+  // After adding, redirect to the list page
+  redirect('/list');
+}
+
+export async function editContact(contact: Contact) {
+  await prisma.contact.update({
+    where: { id: contact.id },
+    data: {
+      firstName: contact.firstName,
+      lastName: contact.lastName,
+      address: contact.address,
+      image: contact.image,
+      description: contact.description,
+      owner: contact.owner,
+    },
+  });
+  // After updating, redirect to the list page
+  redirect('/list');
 }
