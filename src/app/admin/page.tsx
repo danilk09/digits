@@ -11,23 +11,25 @@ const AdminPage = async () => {
       user: { email: string; id: string; name: string };
     } | null,
   );
-  const contact = await prisma.contact.findMany({});
-
+  const contacts = await prisma.contact.findMany({});
+  const notes = await prisma.note.findMany({});
   return (
     <main>
+      <h2 className="text-center pt-3">Contacts</h2>
       <Container id="list" fluid className="py-3">
-        <Row>
           <Col>
-            <h1>List Contacts (Admin)</h1>
             <Row xs={1} md={2} lg={3} className="g-4">
-              {contact.map((contact) => (
+              {contacts.map((contact, index) => (
                 <Col key={`Contact-${contact.firstName}`}>
-                  <ContactCardAdmin {...contact} />
+                  <ContactCardAdmin
+                    key={index}
+                    contact={contact}
+                    notes={notes.filter(note => note.contactId === contact.id)}
+                  />
                 </Col>
               ))}
             </Row>
           </Col>
-        </Row>
       </Container>
     </main>
   );
