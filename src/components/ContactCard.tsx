@@ -1,22 +1,30 @@
 "use client";
 
-import { Contact } from '@/lib/validationSchemas';
-import { Card, Image } from "react-bootstrap";
+import { Contact, Note } from "@prisma/client";
+import { Card, Image, ListGroup } from "react-bootstrap";
 import Link from 'next/link';
+import NoteItem from "./NoteItem";
+import AddNoteForm from "./AddNoteForm";
 
 /* Renders a single row in the List Stuff table. See list/page.tsx. */
-const ContactCard = ({ id, firstName, lastName, address, image, description }: Contact) => (
+const ContactCard = ({ contact, notes}: {contact: Contact; notes: Note[]}) => (
     <Card className="h-100">
         <Card.Header>
-            <Image src={image} width={75} alt="Contact Image" />
-            <Card.Title>{firstName} {lastName}</Card.Title>
-            <Card.Subtitle>{address}</Card.Subtitle>
+            <Image src={contact.image} width={75} alt="Contact Image" />
+            <Card.Title>{contact.firstName} {contact.lastName}</Card.Title>
+            <Card.Subtitle>{contact.address}</Card.Subtitle>
         </Card.Header>
         <Card.Body>
-            <Card.Text>{description}</Card.Text>
+            <Card.Text>{contact.description}</Card.Text>
         </Card.Body>
+        <ListGroup variant="flush">
+            {notes.map((note) => (
+                <NoteItem key={note.id} note={note}/>
+            ))}
+        </ListGroup>
+        <AddNoteForm contactId={contact.id} />
         <Card.Footer as="div">
-            <Link href={`edit/${id}`}>Edit</Link>
+            <Link href={`edit/${contact.id}`}>Edit</Link>
         </Card.Footer>
     </Card>  
 );
