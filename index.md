@@ -1,4 +1,4 @@
-![](./digits_home_page.png)
+![](docs/home_page.png)
 
 ## Installation
 
