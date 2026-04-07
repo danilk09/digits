@@ -1,4 +1,4 @@
-![](docs/home_page.png)
+![](doc/home_page.png)
 
 ## Installation
 
